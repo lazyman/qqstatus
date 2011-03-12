@@ -47,6 +47,7 @@ public class LineChart {
 	public void writeImage() {
 		final CategoryDataset dataset = createDataset();
 		final JFreeChart chart = createChart(dataset);
+		SimpleDateFormat sdf = new SimpleDateFormat("-yyyy-MM-dd");
 
 		try {
 			String root = Init.getRootpath();
@@ -57,8 +58,8 @@ public class LineChart {
 			}
 			File rootf = new File(root);
 			rootf.mkdirs();
-			File file = new File(rootf, qqid + ".png");
-			ChartUtilities.saveChartAsPNG(file, chart, 1000, 250);
+			File file = new File(rootf, qqid + sdf.format(begintime.getTime()) + ".png");
+			ChartUtilities.saveChartAsPNG(file, chart, 200, 11000);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -88,7 +89,7 @@ public class LineChart {
 	 * @return a sample dataset.
 	 */
 	private CategoryDataset createDataset() {
-		SimpleDateFormat sdf = new SimpleDateFormat("hhmm");
+		SimpleDateFormat sdf = new SimpleDateFormat("HHmm");
 
 		Session s = HibernateUtil.getSessionFactory().openSession();
 		String hql = "from Log l where l.qqId = ? and l.time<? and l.time>?";
@@ -133,7 +134,7 @@ public class LineChart {
 				"时间", // domain axis label Y轴
 				"在线状态", // range axis label X轴
 				dataset, // data
-				PlotOrientation.VERTICAL, // orientation
+				PlotOrientation.HORIZONTAL, // orientation
 				true, // include legend 图例
 				true, // tooltips
 				false // urls
@@ -210,6 +211,6 @@ public class LineChart {
 
 	public static void main(String[] args) {
 		LineChart line = new LineChart();
-		// line.
+		line.writeImage();
 	}
 }

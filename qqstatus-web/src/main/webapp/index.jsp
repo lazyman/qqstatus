@@ -34,6 +34,6 @@ QQ:<input name="qqid" value="<%= qqid %>" />
 日期：<input name="date" value="<%= date %>" />
 <input type="submit" />
 </form>
-<img alt="" src="statimg/<%=qqid %>.png">
+<img alt="" src="statimg/<%=qqid %>-<%=date %>.png">
 </body>
 </html>
