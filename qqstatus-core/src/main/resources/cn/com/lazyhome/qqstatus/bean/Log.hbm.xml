@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2011-3-8 21:42:21 by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="cn.com.lazyhome.qqstatus.bean.Log" table="log_" schema="dbo" catalog="qqstatus">
+        <id name="id" type="int">
+            <column name="id_" />
+            <generator class="native" />
+        </id>
+        <property name="qqId" type="string">
+            <column name="qq_id_" length="50" not-null="true" />
+        </property>
+        <property name="status" type="int">
+            <column name="status_" not-null="true" />
+        </property>
+        <property name="file" type="blob">
+            <column name="file_" />
+        </property>
+        <property name="fileSize" type="java.lang.Integer">
+            <column name="file_size_" />
+        </property>
+        <property name="time" type="timestamp">
+            <column name="time_" length="23" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
