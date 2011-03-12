@@ -12,7 +12,7 @@
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache,   must-revalidate">
 <meta http-equiv="expires" content="0">
-<title>Insert title here</title>
+<title>qq status</title>
 </head>
 <%
 	String qqid = request.getParameter("qqid");
