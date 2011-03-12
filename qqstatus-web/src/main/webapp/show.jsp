@@ -19,7 +19,7 @@
 	String date = request.getParameter("date");
 
 	LineChart chart = new LineChart(qqid);
-	if(date != "") {
+	if(date != null && date != "") {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date d = sdf.parse(date);
 		Calendar c = new GregorianCalendar();
