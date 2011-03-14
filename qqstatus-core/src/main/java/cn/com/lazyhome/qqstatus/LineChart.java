@@ -33,6 +33,7 @@ import cn.com.lazyhome.qqstatus.util.Init;
 public class LineChart {
 	private String qqid = "84074663";
 	private Calendar begintime;
+	private Calendar inputCalendar;
 	private int days;
 
 	public LineChart() {
@@ -44,11 +45,14 @@ public class LineChart {
 		this.qqid = qqid;
 	}
 
-	public void writeImage() {
+	public void writeImage() throws Exception {
 		final CategoryDataset dataset = createDataset();
 		final JFreeChart chart = createChart(dataset);
 		SimpleDateFormat sdf = new SimpleDateFormat("-yyyy-MM-dd");
-
+		
+		if(dataset.getRowCount() == 0) {
+			throw new Exception("no-data");
+		}
 		try {
 			String root = Init.getRootpath();
 			if(root == null) {
@@ -58,8 +62,8 @@ public class LineChart {
 			}
 			File rootf = new File(root);
 			rootf.mkdirs();
-			File file = new File(rootf, qqid + sdf.format(begintime.getTime()) + ".png");
-			ChartUtilities.saveChartAsPNG(file, chart, 200, 11000);
+			File file = new File(rootf, qqid + sdf.format(inputCalendar.getTime()) + ".png");
+			ChartUtilities.saveChartAsPNG(file, chart, 200, 3000);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -95,7 +99,10 @@ public class LineChart {
 		String hql = "from Log l where l.qqId = ? and l.time<? and l.time>?";
 		Query q = s.createQuery(hql);
 		q.setString(0, qqid);
-//		today.add(Calendar.DATE, -3);
+		
+		inputCalendar = Calendar.getInstance();
+		inputCalendar.setTimeInMillis(begintime.getTimeInMillis());
+		begintime.add(Calendar.DATE, 1);
 		q.setCalendar(1, begintime);
 
 		Calendar yestoday = new GregorianCalendar();
@@ -130,7 +137,7 @@ public class LineChart {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
 
 		final JFreeChart chart = ChartFactory.createLineChart(
-				sdf.format(begintime.getTime()) + " QQ 在线图示", // chart title 标题
+				sdf.format(inputCalendar.getTime()) + " QQ 在线图示", // chart title 标题
 				"时间", // domain axis label Y轴
 				"在线状态", // range axis label X轴
 				dataset, // data
@@ -205,12 +212,17 @@ public class LineChart {
 		categoryAxis.setLabelFont(new Font("宋体", Font.BOLD, 22));// x轴标题字体
 		categoryAxis.setTickLabelFont(new Font("宋体", Font.PLAIN, 12));// x轴刻度字体
 
+		
 		return chart;
 
 	}
 
 	public static void main(String[] args) {
 		LineChart line = new LineChart();
-		line.writeImage();
+		try {
+			line.writeImage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

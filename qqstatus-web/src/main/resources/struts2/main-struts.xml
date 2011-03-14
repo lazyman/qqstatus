@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC 
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="qqstatus" extends="struts-default" namespace="/">
+		<!-- default-interceptor-ref name="storeStack"></default-interceptor-ref-->
+		
+		<default-action-ref name="index"></default-action-ref>
+
+		<action name="input" class="cn.com.lazyhome.qqstatus.action.Record" >
+			<result>input.jsp</result>
+		</action>
+		<action name="show" class="cn.com.lazyhome.qqstatus.action.Show" >
+			<result>index.jsp</result>
+			<result name="no-data">input.jsp</result>
+		</action>
+
+	</package>
+</struts>

@@ -29,6 +29,10 @@ public class Init implements ServletContextListener {
 	 */
 	public void contextDestroyed(ServletContextEvent event) {
 		tasker.setRun(false);
+		
+		synchronized (tasker) {
+			tasker.notify();
+		}
 		tasker = null;
 		
 		thread = null;

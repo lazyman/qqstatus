@@ -1,11 +1,8 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=utf-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@page import="cn.com.lazyhome.qqstatus.LineChart"%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.Calendar"%>
-<%@page import="java.util.Date"%>
-<%@page import="java.util.GregorianCalendar"%><html>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- 不允许缓存  -->
@@ -14,26 +11,14 @@
 <meta http-equiv="expires" content="0">
 <title>qq status</title>
 </head>
-<%
-	String qqid = request.getParameter("qqid");
-	String date = request.getParameter("date");
 
-	LineChart chart = new LineChart(qqid);
-	if(date != null && date != "") {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date d = sdf.parse(date);
-		Calendar c = new GregorianCalendar();
-		c.setTime(d);
-		chart.setBegintime(c);
-	}
-	chart.writeImage();
-%>
 <body>
-<form>
-QQ:<input name="qqid" value="<%= qqid %>" />
-日期：<input name="date" value="<%= date %>" />
-<input type="submit" />
-</form>
-<img alt="" src="statimg/<%=qqid %>-<%=date %>.png">
+<s:form theme="simple" action="show" method="get">
+<s:date name="date" format="yyyy-MM-dd" var="datestr" />
+QQ:<s:textfield name="qqId"></s:textfield>
+日期：<input name="date" value="${datestr}" />
+<input type="submit" value="查看" />
+</s:form>
+<img alt="" src="statimg/${qqId }-${datestr }.png">
 </body>
 </html>

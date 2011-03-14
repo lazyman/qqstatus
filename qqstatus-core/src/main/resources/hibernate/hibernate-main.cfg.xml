@@ -13,8 +13,7 @@
         <property name="hibernate.search.autoregister_listeners">false</property>
         <property name="hibernate.show_sql">true</property>
         
-        
         <mapping resource="cn/com/lazyhome/qqstatus/bean/Log.hbm.xml" />
-        <mapping resource="cn/com/lazyhome/qqstatus/bean/Qq.hbm.xml" />
+        <mapping resource="cn/com/lazyhome/qqstatus/bean/Concern.hbm.xml" />
     </session-factory>
 </hibernate-configuration>
