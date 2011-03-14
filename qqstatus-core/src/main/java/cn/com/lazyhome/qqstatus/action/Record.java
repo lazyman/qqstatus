@@ -38,16 +38,16 @@ public class Record extends ActionSupport implements ServletRequestAware {
 		List<Concern> l = q.list();
 		if(l.size() >0) {
 			addActionMessage("你正在关注QQ:" + concern.getQqId() + "，无需重复提交。");
+		} else {
+			Transaction t = s.beginTransaction();
+			concern.setCreateIp(request.getRemoteAddr());
+			concern.setCreateTime(new Date());
+			s.save(concern);
+			t.commit();
+			s.close();
+			
+			addActionMessage("已开始关注QQ:" + concern.getQqId());
 		}
-		
-		Transaction t = s.beginTransaction();
-		concern.setCreateIp(request.getRemoteAddr());
-		concern.setCreateTime(new Date());
-		s.save(concern);
-		t.commit();
-		s.close();
-		
-		addActionMessage("已开始关注QQ:" + concern.getQqId());
 		
 		return SUCCESS;
 	}
