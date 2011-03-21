@@ -1,8 +1,11 @@
 package cn.com.lazyhome.qqstatus.util;
 
+import java.sql.Date;
+import java.util.Calendar;
+import java.util.Timer;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-
 
 
 public class Init implements ServletContextListener {
@@ -22,6 +25,20 @@ public class Init implements ServletContextListener {
 		thread = new Thread(fetcher);
 		thread.start();
 		
+		//间隔1天
+		long period = 1000 * 60 * 60 * 24;
+		// 延迟一定时间执行
+		long delay = 5000;
+		
+		Timer timer = new Timer(true);
+		MailNotify task = new MailNotify();
+		
+		Calendar firstTime = Calendar.getInstance();
+		firstTime.set(Calendar.HOUR_OF_DAY, 0);
+		firstTime.set(Calendar.MINUTE, 0);
+		firstTime.set(Calendar.SECOND, 0);
+		
+		timer.schedule(task, firstTime.getTime(), period);
 	}
 
 	/**
