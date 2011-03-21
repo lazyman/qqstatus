@@ -45,7 +45,7 @@ public class LineChart {
 		this.qqid = qqid;
 	}
 
-	public void writeImage() throws Exception {
+	public String writeImage() throws Exception {
 		final CategoryDataset dataset = createDataset();
 		final JFreeChart chart = createChart(dataset);
 		SimpleDateFormat sdf = new SimpleDateFormat("-yyyy-MM-dd");
@@ -64,8 +64,12 @@ public class LineChart {
 			rootf.mkdirs();
 			File file = new File(rootf, qqid + sdf.format(inputCalendar.getTime()) + ".png");
 			ChartUtilities.saveChartAsPNG(file, chart, 200, 3000);
+			
+			return file.getPath();
 		} catch (IOException e) {
 			e.printStackTrace();
+			
+			return null;
 		}
 	}
 	

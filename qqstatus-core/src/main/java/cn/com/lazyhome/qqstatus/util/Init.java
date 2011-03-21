@@ -7,7 +7,7 @@ import javax.servlet.ServletContextListener;
 
 public class Init implements ServletContextListener {
 	private Thread thread;
-	private Tasker tasker;
+	private FetchStatus fetcher;
 	
 	private static String rootpath;
 	
@@ -17,9 +17,9 @@ public class Init implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent event) {
 		rootpath = event.getServletContext().getRealPath("/");
 		
-		tasker = new Tasker();
+		fetcher = new FetchStatus();
 		
-		thread = new Thread(tasker);
+		thread = new Thread(fetcher);
 		thread.start();
 		
 	}
@@ -28,12 +28,12 @@ public class Init implements ServletContextListener {
 	 * ³ÌÐòÍË³ö
 	 */
 	public void contextDestroyed(ServletContextEvent event) {
-		tasker.setRun(false);
+		fetcher.setRun(false);
 		
-		synchronized (tasker) {
-			tasker.notify();
+		synchronized (fetcher) {
+			fetcher.notify();
 		}
-		tasker = null;
+		fetcher = null;
 		
 		thread = null;
 	}

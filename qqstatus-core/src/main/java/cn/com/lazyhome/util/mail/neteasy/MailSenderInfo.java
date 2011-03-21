@@ -1,6 +1,7 @@
 package cn.com.lazyhome.util.mail.neteasy;
 
 import java.util.Properties;
+import java.util.Vector;
 
 public class MailSenderInfo {
 
@@ -19,24 +20,71 @@ public class MailSenderInfo {
 	private String userName;
 	private String password;
 	// 是否需要身份验证
-	private boolean validate = false;
+	private boolean validate = true;
 	// 邮件主题
 	private String subject;
 	// 邮件的文本内容
 	private String content;
 	// 邮件附件的文件名
-	private String[] attachFileNames;
+	private Vector<String> attachFileNames;
+	
+	private Properties mailProp;
+	private static Properties neteaseProp;
+	private static Properties GmailProp;
+	public static final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 
 	/** */
 	/**
 	 * 获得邮件会话属性
 	 */
-	public Properties getProperties() {
-		Properties p = new Properties();
-		p.put("mail.smtp.host", this.mailServerHost);
-		p.put("mail.smtp.port", this.mailServerPort);
-		p.put("mail.smtp.auth", validate ? "true" : "false");
-		return p;
+	public Properties getMailProp() {
+		if (mailProp == null) {
+			mailProp = new Properties();
+			mailProp.put("mail.smtp.host", this.mailServerHost);
+			mailProp.put("mail.smtp.port", this.mailServerPort);
+			mailProp.put("mail.smtp.auth", validate ? "true" : "false");
+		}
+		return mailProp;
+	}
+	
+	public static Properties get163Prop() {
+		if(neteaseProp == null) {
+			neteaseProp = new Properties();
+			neteaseProp.put("mail.smtp.host", "smtp.163.com");
+			neteaseProp.put("mail.smtp.port", 25);
+			neteaseProp.put("mail.smtp.auth", "true" );
+		}
+		
+		return neteaseProp;
+	}
+	public static Properties getGmailProp() {
+		if(GmailProp == null) {
+			
+			GmailProp = new Properties();
+			GmailProp.setProperty("mail.smtp.host", "smtp.gmail.com");
+			// Gmail提供的POP3和SMTP是使用安全套接字层SSL的
+			GmailProp.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
+			GmailProp.setProperty("mail.smtp.socketFactory.fallback", "false");
+			GmailProp.setProperty("mail.smtp.port", "465");
+			GmailProp.setProperty("mail.smtp.socketFactory.port", "465");
+	
+			GmailProp.setProperty("mail.imap.socketFactory.class", SSL_FACTORY);
+			GmailProp.setProperty("mail.imap.socketFactory.fallback", "false");
+			GmailProp.setProperty("mail.imap.port", "993");
+			GmailProp.setProperty("mail.imap.socketFactory.port", "993");
+	
+			GmailProp.setProperty("mail.pop3.socketFactory.class", SSL_FACTORY);
+			GmailProp.setProperty("mail.pop3.socketFactory.fallback", "false");
+			GmailProp.setProperty("mail.pop3.port", "995");
+			GmailProp.setProperty("mail.pop3.socketFactory.port", "995");
+	
+			GmailProp.put("mail.smtp.auth", "true");
+		}
+		return GmailProp;
+	}
+
+	public void setMailProp(Properties mailProp) {
+		this.mailProp = mailProp;
 	}
 
 	public String getMailServerHost() {
@@ -63,11 +111,11 @@ public class MailSenderInfo {
 		this.validate = validate;
 	}
 
-	public String[] getAttachFileNames() {
+	public Vector<String> getAttachFileNames() {
 		return attachFileNames;
 	}
 
-	public void setAttachFileNames(String[] fileNames) {
+	public void setAttachFileNames(Vector<String> fileNames) {
 		this.attachFileNames = fileNames;
 	}
 

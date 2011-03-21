@@ -23,9 +23,7 @@ public class MyAuthenticator extends Authenticator {
 	public static void main(String[] args) {
 		// 这个类主要是设置邮件
 		MailSenderInfo mailInfo = new MailSenderInfo();
-		mailInfo.setMailServerHost("smtp.163.com");
-		mailInfo.setMailServerPort("25");
-		mailInfo.setValidate(true);
+		mailInfo.setMailProp(MailSenderInfo.get163Prop());
 		mailInfo.setUserName("dch438@163.com");
 		mailInfo.setPassword("密码");// 您的邮箱密码
 		mailInfo.setFromAddress("dch438@163.com");

@@ -26,7 +26,11 @@ public class Show extends ActionSupport {
 			chart.setBegintime(c);
 		}
 		try {
-			chart.writeImage();
+			Calendar now = new GregorianCalendar();
+			now.add(Calendar.DATE, -1);
+			if(now.before(chart.getBegintime())) {
+				chart.writeImage();
+			}
 		} catch (Exception e) {
 			return e.getMessage();
 		}

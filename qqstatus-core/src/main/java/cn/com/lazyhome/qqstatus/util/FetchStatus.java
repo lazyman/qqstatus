@@ -5,7 +5,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-public class Tasker implements Runnable {
+public class FetchStatus implements Runnable {
 	private boolean run = true;
 
 	public void run() {
@@ -46,7 +46,7 @@ public class Tasker implements Runnable {
 	}
 
 	public static void main(String[] args) {
-		new Thread(new Tasker()).start();
+		new Thread(new FetchStatus()).start();
 	}
 
 }
