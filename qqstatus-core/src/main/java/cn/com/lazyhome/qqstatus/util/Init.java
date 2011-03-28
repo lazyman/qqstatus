@@ -32,6 +32,7 @@ public class Init implements ServletContextListener {
 		
 		Timer timer = new Timer(true);
 		MailNotify task = new MailNotify();
+		task.setRepeat(false);
 		
 		Calendar firstTime = Calendar.getInstance();
 		firstTime.set(Calendar.HOUR_OF_DAY, 0);

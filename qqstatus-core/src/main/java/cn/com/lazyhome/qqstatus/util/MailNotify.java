@@ -15,12 +15,12 @@ import cn.com.lazyhome.util.mail.neteasy.MailSenderInfo;
 import cn.com.lazyhome.util.mail.neteasy.SimpleMailSender;
 
 public class MailNotify extends TimerTask  {
-	private boolean run = true;
+	private boolean repeat = true;
 
 	public void run() {
 		String hql = "from Concern c";
 
-		while (run) {
+		do {
 			Session s = HibernateUtil.getSessionFactory().openSession();
 			Query q = s.createQuery(hql);
 			CheckStatus check = new CheckStatus();
@@ -75,15 +75,15 @@ public class MailNotify extends TimerTask  {
 //			}
 			
 			s.close();
-		}
+		} while(repeat);
 	}
 	
-	public boolean isRun() {
-		return run;
+	public boolean isRepeat() {
+		return repeat;
 	}
 
-	public void setRun(boolean run) {
-		this.run = run;
+	public void setRepeat(boolean run) {
+		this.repeat = run;
 	}
 
 	public static void main(String[] args) {
