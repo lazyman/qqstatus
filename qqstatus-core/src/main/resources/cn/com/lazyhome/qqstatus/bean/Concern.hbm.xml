@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 2011-3-14 22:03:56 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
-    <class name="cn.com.lazyhome.qqstatus.bean.Concern" table="concern_" schema="dbo" catalog="qqstatus">
+    <class name="cn.com.lazyhome.qqstatus.bean.Concern" table="concern_" >
         <id name="id" type="int">
             <column name="id_" />
             <generator class="native" />

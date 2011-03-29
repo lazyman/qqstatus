@@ -50,7 +50,7 @@ public class MailNotify extends TimerTask  {
 					mailInfo.setFromAddress("dch438@163.com");
 					mailInfo.setToAddress(mail);
 					mailInfo.setSubject(qq + "状态");
-					mailInfo.setContent("设置邮箱内容 如http://www.guihua.org 中国桂花网 是中国最大桂花网站==");
+					mailInfo.setContent("QQ	在线状态跟踪");
 					
 					// 附件图片
 					Vector<String> attchment = new Vector<String>();
