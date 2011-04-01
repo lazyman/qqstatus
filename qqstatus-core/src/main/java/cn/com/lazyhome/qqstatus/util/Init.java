@@ -35,9 +35,10 @@ public class Init implements ServletContextListener {
 		task.setRepeat(false);
 		
 		Calendar firstTime = Calendar.getInstance();
-		firstTime.set(Calendar.HOUR_OF_DAY, 0);
+		firstTime.set(Calendar.HOUR_OF_DAY, 8);
 		firstTime.set(Calendar.MINUTE, 0);
 		firstTime.set(Calendar.SECOND, 0);
+		firstTime.add(Calendar.DATE, 1);
 		
 		timer.schedule(task, firstTime.getTime(), period);
 	}
