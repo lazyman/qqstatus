@@ -26,7 +26,7 @@ public class FetchStatus implements Runnable {
 			
 			synchronized (this) {
 				try {
-					this.wait(300000);
+					this.wait(60000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
