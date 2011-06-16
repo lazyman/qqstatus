@@ -7,6 +7,7 @@ import org.hibernate.Session;
 
 public class FetchStatus implements Runnable {
 	private boolean run = true;
+	private long period = 300000;
 
 	public void run() {
 		String hql = "select distinct c.qqId from Concern c";
@@ -26,7 +27,7 @@ public class FetchStatus implements Runnable {
 			
 			synchronized (this) {
 				try {
-					this.wait(60000);
+					this.wait(period);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -43,6 +44,14 @@ public class FetchStatus implements Runnable {
 
 	public void setRun(boolean run) {
 		this.run = run;
+	}
+
+	public long getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(long period) {
+		this.period = period;
 	}
 
 	public static void main(String[] args) {

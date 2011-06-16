@@ -34,6 +34,10 @@ public class MailNotify extends TimerTask  {
 				String qq = c.getQqId();
 				String mail = c.getMail();
 //				check.checking(qq);
+				if(mail == null || mail.trim().equals("")) {
+					// 邮箱若为空，则跳过下一个不发送
+					continue;
+				}
 				
 				LineChart chart = new LineChart(qq);
 				Calendar cal = new GregorianCalendar();
@@ -63,6 +67,7 @@ public class MailNotify extends TimerTask  {
 					SimpleMailSender.sendHtmlMail(mailInfo);// 发送html格式
 				} catch (Exception e) {
 					//TODO
+					e.printStackTrace();
 				}
 			}
 			

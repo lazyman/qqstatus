@@ -31,6 +31,8 @@ import cn.com.lazyhome.qqstatus.util.HibernateUtil;
 import cn.com.lazyhome.qqstatus.util.Init;
 
 public class LineChart {
+	public static int WIDTH = 200;
+	public static int HEIGHT = 3000;
 	private String qqid = "84074663";
 	private Calendar begintime;
 	private Calendar inputCalendar;
@@ -63,7 +65,7 @@ public class LineChart {
 			File rootf = new File(root);
 			rootf.mkdirs();
 			File file = new File(rootf, qqid + sdf.format(inputCalendar.getTime()) + ".png");
-			ChartUtilities.saveChartAsPNG(file, chart, 200, 3000);
+			ChartUtilities.saveChartAsPNG(file, chart, WIDTH, HEIGHT);
 			
 			return file.getPath();
 		} catch (IOException e) {

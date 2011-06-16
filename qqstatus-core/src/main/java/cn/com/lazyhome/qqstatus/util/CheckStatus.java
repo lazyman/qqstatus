@@ -18,14 +18,15 @@ import cn.com.lazyhome.qqstatus.bean.Log;
 public class CheckStatus {
 	private static org.apache.commons.logging.Log logger = LogFactory.getLog(CheckStatus.class);
 
-	private static String url_begin = "http://wpa.qq.com/pa?p=2:";
-	private static String url_end = ":41";
+	public static String URL_BEGIN = "http://wpa.qq.com/pa?p=2:";
+	public static String URL_END = ":41";
+	public static long IMAGE_SIZE;
 	
-	private long onlength = 1243;
-	private long offlength = 1252;
+//	private long onlength = 1243;
+//	private long offlength = 1252;
 
 	public void checking(String qqno) {
-		String url_s = url_begin + qqno + url_end;
+		String url_s = URL_BEGIN + qqno + URL_END;
 
 		try {
 			URL url = new URL(url_s);
@@ -48,7 +49,7 @@ public class CheckStatus {
 			long nEndPos =getFileSize(url_s);
 			logger.debug(String .valueOf(nEndPos));
 			int status = 0;
-			status = onlength == nEndPos?1:0;
+			status = IMAGE_SIZE == nEndPos?1:0;
 			logger.debug(String .valueOf(status));
 			
 			Blob file = new BlobImpl(baos.toByteArray());
@@ -80,7 +81,8 @@ public class CheckStatus {
 
 			int responseCode = httpConnection.getResponseCode();
 			if (responseCode >= 400) {
-				System.err.println("Error Code : " + responseCode);
+				logger.debug("Error Code : " + responseCode);
+				
 				return -2; // -2 represent access is error
 			}
 			String sHeader;
@@ -98,7 +100,8 @@ public class CheckStatus {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(nFileLength);
+		logger.debug(nFileLength);
+		
 		return nFileLength;
 	}
 
