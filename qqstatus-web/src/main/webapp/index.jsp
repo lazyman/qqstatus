@@ -13,11 +13,12 @@
 </head>
 
 <body>
-<s:form theme="simple" action="show" method="get">
+<s:form theme="simple" action="showpic" method="get">
 <s:date name="date" format="yyyy-MM-dd" var="datestr" />
 QQ:<s:textfield name="qqId"></s:textfield>
 日期：<input name="date" value="${datestr}" />
 <input type="submit" value="查看" />
+<s:submit method="showtext"></s:submit>
 </s:form>
 <img alt="" src="statimg/${qqId }-${datestr }.png">
 </body>

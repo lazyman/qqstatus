@@ -65,11 +65,11 @@ public class Init implements ServletContextListener {
 		} catch (Exception e) {
 			period = 1000 * 60 * 60 * 24;
 			delay = 5000;
-			fetch_period = 300000;
+			fetch_period = 60000;
 			
 			
 			width = 200;
-			height = 3000;
+			height = 15000;
 			url_begin = "http://wpa.qq.com/pa?p=2:";
 			url_end = ":41";
 			imageSize = 1243;

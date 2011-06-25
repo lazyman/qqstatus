@@ -65,7 +65,12 @@ public class LineChart {
 			File rootf = new File(root);
 			rootf.mkdirs();
 			File file = new File(rootf, qqid + sdf.format(inputCalendar.getTime()) + ".png");
-			ChartUtilities.saveChartAsPNG(file, chart, WIDTH, HEIGHT);
+			
+			Calendar yestoday = new GregorianCalendar();
+			yestoday.add(Calendar.DATE, -1);
+			if(yestoday.before(begintime) || !file.exists()) {
+				ChartUtilities.saveChartAsPNG(file, chart, WIDTH, HEIGHT);
+			}
 			
 			return file.getPath();
 		} catch (IOException e) {
@@ -102,7 +107,7 @@ public class LineChart {
 		SimpleDateFormat sdf = new SimpleDateFormat("HHmm");
 
 		Session s = HibernateUtil.getSessionFactory().openSession();
-		String hql = "from Log l where l.qqId = ? and l.time<? and l.time>?";
+		String hql = "from Log l where l.qqId = ? and l.time<? and l.time>? order by l.time";
 		Query q = s.createQuery(hql);
 		q.setString(0, qqid);
 		
@@ -126,6 +131,7 @@ public class LineChart {
 			Log log = logs.get(i);
 			dataset.addValue(log.getStatus(), qqid, sdf.format(log.getTime()));
 		}
+		s.close();
 
 		return dataset;
 

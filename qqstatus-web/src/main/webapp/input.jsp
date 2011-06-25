@@ -26,7 +26,7 @@
 </table>
 </s:form>
 <p>&nbsp;</p>
-<s:form action="show" method="get">
+<s:form action="showpic" method="get">
 <table width="80%" align="center" cellspacing="0" border="0">
 	<tr>
 		<td><p>即时查看QQ状态：</p>
