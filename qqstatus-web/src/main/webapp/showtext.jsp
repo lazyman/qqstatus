@@ -20,7 +20,7 @@ QQ:<s:textfield name="qqId"></s:textfield>
 <input type="submit" value="查看" />
 <s:submit method="showtext"></s:submit>
 <s:iterator value="textlog" var="l">
-	${l.time } - ${l.status }<br />
+	<br />${l.time } - ${l.status }
 </s:iterator>
 </s:form>
 
