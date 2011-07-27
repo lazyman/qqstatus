@@ -27,13 +27,14 @@
 </s:form>
 <p>&nbsp;</p>
 <s:form action="showpic" method="get">
+<s:date name="nowtime" format="yyyy-MM-dd" var="datestr" />
 <table width="80%" align="center" cellspacing="0" border="0">
 	<tr>
 		<td><p>即时查看QQ状态：</p>
 	    <p>QQ：
 	      <input name="qqId" alt="你关注的QQ" />
 	      日期：
-	      <input name="date" value="2011-03-14" />
+	      <input name="date" value="${datestr }" />
 	      <input name="submit" type="submit" value="查看" />
 	    </p></td>
 	</tr>
