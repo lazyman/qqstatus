@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Vector;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -37,6 +38,10 @@ public class LineChart {
 	private Calendar begintime;
 	private Calendar inputCalendar;
 	private int days;
+	/**
+	 * 文本记录
+	 */
+	private Vector<Log> textlog;
 
 	public LineChart() {
 		begintime = Calendar.getInstance();
@@ -100,7 +105,7 @@ public class LineChart {
 	}
 	/**
 	 * Creates a sample dataset.
-	 * 
+	 * 同时生成文本记录
 	 * @return a sample dataset.
 	 */
 	private CategoryDataset createDataset() {
@@ -125,11 +130,21 @@ public class LineChart {
 
 		// create the dataset...
 		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		textlog = new Vector<Log>();
 
+		int laststatus = logs.get(0).getStatus();
 		int size = logs.size();
 		for (int i = 0; i < size; i++) {
 			Log log = logs.get(i);
+			// 用于图表的数据
 			dataset.addValue(log.getStatus(), qqid, sdf.format(log.getTime()));
+			
+			// 纯文本数据，只记录每个转折点 
+			if(log.getStatus() != laststatus ) {
+				textlog.add(log);
+			}
+			
+			laststatus = log.getStatus();
 		}
 		s.close();
 
@@ -236,5 +251,8 @@ public class LineChart {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	public Vector<Log> getTextlog() {
+		return textlog;
 	}
 }

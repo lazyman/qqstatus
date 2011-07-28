@@ -13,12 +13,14 @@
 </head>
 
 <body>
-<s:form theme="simple" action="showpic" method="get">
+<s:form theme="simple" action="showtext" method="get">
 <s:date name="date" format="yyyy-MM-dd" var="datestr" />
 QQ:<s:textfield name="qqId"></s:textfield>
 日期：<input name="date" value="${datestr}" />
 <input type="submit" value="查看" />
-<s:submit method="showtext"></s:submit>
+
+
+<br />
 <s:iterator value="textlog" var="l">
 	<br />${l.time } - ${l.status }
 </s:iterator>

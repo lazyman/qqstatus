@@ -11,6 +11,7 @@ import org.hibernate.Session;
 
 import cn.com.lazyhome.qqstatus.LineChart;
 import cn.com.lazyhome.qqstatus.bean.Concern;
+import cn.com.lazyhome.qqstatus.bean.Log;
 import cn.com.lazyhome.util.mail.neteasy.MailSenderInfo;
 import cn.com.lazyhome.util.mail.neteasy.SimpleMailSender;
 
@@ -46,6 +47,16 @@ public class MailNotify extends TimerTask  {
 				
 				try {
 					String file = chart.writeImage();
+					StringBuffer sb = new StringBuffer();
+					Vector<Log> logs = new Vector<Log>();
+					Log log;
+					for(int j=0; j<logs.size(); j++) {
+						log = logs.get(j);
+						sb.append(log.getTime());
+						sb.append(" - ");
+						sb.append(log.getStatus());
+						sb.append("\n");
+					}
 					
 					MailSenderInfo mailInfo = new MailSenderInfo();
 					mailInfo.setMailProp(MailSenderInfo.getGmailProp());
@@ -54,7 +65,7 @@ public class MailNotify extends TimerTask  {
 					mailInfo.setFromAddress("dch438@163.com");
 					mailInfo.setToAddress(mail);
 					mailInfo.setSubject(qq + "状态");
-					mailInfo.setContent("设置邮箱内容 如http://www.guihua.org 中国桂花网 是中国最大桂花网站==");
+					mailInfo.setContent(sb.toString());
 					
 					// 附件图片
 					Vector<String> attchment = new Vector<String>();
