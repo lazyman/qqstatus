@@ -9,12 +9,15 @@ import java.sql.Blob;
 import java.util.Date;
 
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.lob.BlobImpl;
 
 import cn.com.lazyhome.qqstatus.bean.Log;
 
+/**
+ * 检查QQ状态
+ * @author Administrator
+ *
+ */
 public class CheckStatus {
 	private static org.apache.commons.logging.Log logger = LogFactory.getLog(CheckStatus.class);
 
@@ -25,7 +28,10 @@ public class CheckStatus {
 //	private long onlength = 1243;
 //	private long offlength = 1252;
 
-	public void checking(String qqno) {
+	/**
+	 * 根据QQ号查完状态返回封装好的记录
+	 */
+	public Log checking(String qqno) {
 		String url_s = URL_BEGIN + qqno + URL_END;
 
 		try {
@@ -60,13 +66,12 @@ public class CheckStatus {
 			log.setFileSize((int)nEndPos);
 			log.setFile(file);
 			
-			Session s = HibernateUtil.getSessionFactory().openSession();
-			Transaction t = s.beginTransaction();
-			s.save(log);
-			t.commit();
-			s.close();
+			
+			return log;
 		} catch (IOException e) {
 			logger.fatal(e.getMessage(), e);
+			
+			return null;
 		}
 
 	}

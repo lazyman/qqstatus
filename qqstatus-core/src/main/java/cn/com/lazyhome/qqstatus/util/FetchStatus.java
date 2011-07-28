@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import cn.com.lazyhome.qqstatus.bean.Log;
 
 public class FetchStatus implements Runnable {
 	private boolean run = true;
@@ -17,13 +20,21 @@ public class FetchStatus implements Runnable {
 			Query q = s.createQuery(hql);
 			CheckStatus check = new CheckStatus();
 
+			@SuppressWarnings("unchecked")
 			List<String> concerns = q.list();
 
 			int size = concerns.size();
 			for (int i = 0; i < size; i++) {
 				String qq = concerns.get(i);
-				check.checking(qq);
+				
+				// 将检查记录存入数据库
+				Log log = check.checking(qq);
+				Transaction t = s.beginTransaction();
+				s.save(log);
+				t.commit();
 			}
+			
+			s.close();
 			
 			synchronized (this) {
 				try {
@@ -32,9 +43,6 @@ public class FetchStatus implements Runnable {
 					e.printStackTrace();
 				}
 			}
-			
-			s.close();
-			
 		}
 	}
 	

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.TimerTask;
 import java.util.Vector;
 
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -15,7 +16,14 @@ import cn.com.lazyhome.qqstatus.bean.Log;
 import cn.com.lazyhome.util.mail.neteasy.MailSenderInfo;
 import cn.com.lazyhome.util.mail.neteasy.SimpleMailSender;
 
+/**
+ * 邮件通知
+ * @author Administrator
+ *
+ */
 public class MailNotify extends TimerTask  {
+	private static org.apache.commons.logging.Log logger = LogFactory.getLog(MailNotify.class);
+	
 	private boolean repeat = true;
 
 	public void run() {
@@ -24,9 +32,9 @@ public class MailNotify extends TimerTask  {
 		do {
 			Session s = HibernateUtil.getSessionFactory().openSession();
 			Query q = s.createQuery(hql);
-			CheckStatus check = new CheckStatus();
 			
 			
+			@SuppressWarnings("unchecked")
 			List<Concern> concerns = q.list();
 			
 			int size = concerns.size();
@@ -77,8 +85,7 @@ public class MailNotify extends TimerTask  {
 //					sms.sendTextMail(mailInfo);// 发送文体格式
 					SimpleMailSender.sendHtmlMail(mailInfo);// 发送html格式
 				} catch (Exception e) {
-					//TODO
-					e.printStackTrace();
+					logger.fatal(e.getMessage(), e);
 				}
 			}
 			

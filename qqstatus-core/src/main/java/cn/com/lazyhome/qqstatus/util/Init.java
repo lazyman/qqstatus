@@ -1,6 +1,5 @@
 package cn.com.lazyhome.qqstatus.util;
 
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Properties;
 import java.util.Timer;
@@ -18,6 +17,7 @@ public class Init implements ServletContextListener {
 	private static Log logger = LogFactory.getLog(Init.class);
 	private Thread thread;
 	private FetchStatus fetcher;
+	private Tracker tracker;
 	
 	private static String rootpath;
 	
@@ -29,6 +29,7 @@ public class Init implements ServletContextListener {
 		//间隔1天
 		long period;
 		// 延迟一定时间执行
+		@SuppressWarnings("unused")
 		long delay;
 		long fetch_period;
 		// 图片大小
@@ -90,6 +91,9 @@ public class Init implements ServletContextListener {
 		thread = new Thread(fetcher);
 		thread.start();
 		
+		tracker = new Tracker();
+		new Thread(tracker).start();
+		
 		
 		Timer timer = new Timer(true);
 		MailNotify task = new MailNotify();
@@ -113,11 +117,11 @@ public class Init implements ServletContextListener {
 	 */
 	public void contextDestroyed(ServletContextEvent event) {
 		fetcher.setRun(false);
+		tracker.setRun(false);
 		
 		synchronized (fetcher) {
 			fetcher.notify();
 		}
-		fetcher = null;
 		
 		thread = null;
 	}
