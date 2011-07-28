@@ -3,11 +3,12 @@
   <groupId>cn.com.lazyhome.qqstatus</groupId>
   <artifactId>qqstatus-web</artifactId>
   <packaging>war</packaging>
+  <version>0.0.3</version>
   <dependencies>
   	<dependency>
   		<groupId>cn.com.lazyhome.qqstatus</groupId>
   		<artifactId>qqstatus-core</artifactId>
-  		<version>0.0.1-SNAPSHOT</version>
+  		<version>0.0.3</version>
   	</dependency>
   </dependencies>
 </project>
