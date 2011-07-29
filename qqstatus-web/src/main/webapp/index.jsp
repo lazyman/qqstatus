@@ -23,7 +23,7 @@ QQ:<s:textfield name="qqId"></s:textfield>
 <img alt="" src="statimg/${qqId }-${datestr }.png">
 
 <a name="bottom"></a>
-<s:form theme="simple#bottom" action="showpic" method="get">
+<s:form theme="simple" action="showpic#bottom" method="get">
 <s:date name="date" format="yyyy-MM-dd" var="datestr" />
 QQ:<s:textfield name="qqId"></s:textfield>
 日期：<input name="date" value="${datestr}" />
