@@ -13,8 +13,12 @@
 		<action name="input" class="cn.com.lazyhome.qqstatus.action.Record" >
 			<result>input.jsp</result>
 		</action>
-		<action name="show" class="cn.com.lazyhome.qqstatus.action.Show" >
+		<action name="showpic" class="cn.com.lazyhome.qqstatus.action.ShowPic" >
 			<result>index.jsp</result>
+			<result name="no-data">input.jsp</result>
+		</action>
+		<action name="showpic" class="cn.com.lazyhome.qqstatus.action.ShowPic" method="showtext">
+			<result>showtext.jsp</result>
 			<result name="no-data">input.jsp</result>
 		</action>
 

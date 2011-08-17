@@ -2,20 +2,18 @@ package cn.com.lazyhome.qqstatus.action;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.opensymphony.xwork2.ActionSupport;
-
 import cn.com.lazyhome.qqstatus.bean.Concern;
 import cn.com.lazyhome.qqstatus.util.HibernateUtil;
+
+import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * 记录关注的QQ及接收信息的邮箱、时间等
@@ -25,7 +23,18 @@ import cn.com.lazyhome.qqstatus.util.HibernateUtil;
 public class Record extends ActionSupport implements ServletRequestAware {
 	private Concern concern;
 	private HttpServletRequest request;
+	private Date nowtime;
 	
+	public Date getNowtime() {
+		return nowtime;
+	}
+
+
+	public void setNowtime(Date nowtime) {
+		this.nowtime = nowtime;
+	}
+
+
 	@Override
 	public String execute() throws Exception {
 		Session s = HibernateUtil.getSessionFactory().openSession();
@@ -48,6 +57,7 @@ public class Record extends ActionSupport implements ServletRequestAware {
 			
 			addActionMessage("已开始关注QQ:" + concern.getQqId());
 		}
+		nowtime = new Date();
 		
 		return SUCCESS;
 	}

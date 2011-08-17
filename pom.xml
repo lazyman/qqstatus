@@ -3,10 +3,18 @@
 	<modelVersion>4.0.0</modelVersion>
   <groupId>cn.com.lazyhome</groupId>
   <artifactId>qqstatus</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.3</version>
   <packaging>pom</packaging>
   <dependencies>
   </dependencies>
+  <repositories>
+        <repository>
+          <id>nexus</id>
+          <name>Repository for JDK 1.4 builds</name>
+          <url>http://127.0.0.1:8081/nexus/content/groups/public/</url>
+          <layout>default</layout>
+        </repository>
+      </repositories>
   <modules>
   	<module>qqstatus-core</module>
   	<module>qqstatus-web</module>

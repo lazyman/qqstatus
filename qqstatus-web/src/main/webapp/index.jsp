@@ -13,7 +13,7 @@
 </head>
 
 <body>
-<s:form theme="simple" action="show" method="get">
+<s:form theme="simple" action="showpic" method="get">
 <s:date name="date" format="yyyy-MM-dd" var="datestr" />
 QQ:<s:textfield name="qqId"></s:textfield>
 日期：<input name="date" value="${datestr}" />
@@ -22,12 +22,17 @@ QQ:<s:textfield name="qqId"></s:textfield>
 <s:if test="qqId != null">
 <a href="http://${qqId}.qzone.qq.com" target="_blank">查看Q空间</a>
 </s:if>
+
+<s:submit method="showtext"></s:submit>
+
 </s:form>
 <br />
 <img alt="" src="statimg/${qqId }-${datestr }.png">
+
 <br />
 <a name="bottom"></a>
 <s:form theme="simple" action="show#bottom" method="get">
+
 <s:date name="date" format="yyyy-MM-dd" var="datestr" />
 QQ:<s:textfield name="qqId"></s:textfield>
 日期：<input name="date" value="${datestr}" />
@@ -36,6 +41,9 @@ QQ:<s:textfield name="qqId"></s:textfield>
 <s:if test="qqId != null">
 <a href="http://${qqId}.qzone.qq.com" target="_blank">查看Q空间</a>
 </s:if>
+
+<s:submit method="showtext"></s:submit>
+
 </s:form>
 </body>
 </html>

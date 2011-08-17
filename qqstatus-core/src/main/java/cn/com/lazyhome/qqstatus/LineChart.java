@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Vector;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -31,10 +32,16 @@ import cn.com.lazyhome.qqstatus.util.HibernateUtil;
 import cn.com.lazyhome.qqstatus.util.Init;
 
 public class LineChart {
+	public static int WIDTH = 200;
+	public static int HEIGHT = 3000;
 	private String qqid = "84074663";
 	private Calendar begintime;
 	private Calendar inputCalendar;
 	private int days;
+	/**
+	 * 文本记录
+	 */
+	private Vector<Log> textlog;
 
 	public LineChart() {
 		begintime = Calendar.getInstance();
@@ -63,7 +70,12 @@ public class LineChart {
 			File rootf = new File(root);
 			rootf.mkdirs();
 			File file = new File(rootf, qqid + sdf.format(inputCalendar.getTime()) + ".png");
-			ChartUtilities.saveChartAsPNG(file, chart, 200, 3000);
+			
+			Calendar yestoday = new GregorianCalendar();
+			yestoday.add(Calendar.DATE, -1);
+			if(yestoday.before(begintime) || !file.exists()) {
+				ChartUtilities.saveChartAsPNG(file, chart, WIDTH, HEIGHT);
+			}
 			
 			return file.getPath();
 		} catch (IOException e) {
@@ -93,14 +105,14 @@ public class LineChart {
 	}
 	/**
 	 * Creates a sample dataset.
-	 * 
+	 * 同时生成文本记录
 	 * @return a sample dataset.
 	 */
 	private CategoryDataset createDataset() {
 		SimpleDateFormat sdf = new SimpleDateFormat("HHmm");
 
 		Session s = HibernateUtil.getSessionFactory().openSession();
-		String hql = "from Log l where l.qqId = ? and l.time<? and l.time>?";
+		String hql = "from Log l where l.qqId = ? and l.time<? and l.time>? order by l.time";
 		Query q = s.createQuery(hql);
 		q.setString(0, qqid);
 		
@@ -118,12 +130,23 @@ public class LineChart {
 
 		// create the dataset...
 		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		textlog = new Vector<Log>();
 
+		int laststatus = logs.get(0).getStatus();
 		int size = logs.size();
 		for (int i = 0; i < size; i++) {
 			Log log = logs.get(i);
+			// 用于图表的数据
 			dataset.addValue(log.getStatus(), qqid, sdf.format(log.getTime()));
+			
+			// 纯文本数据，只记录每个转折点 
+			if(log.getStatus() != laststatus ) {
+				textlog.add(log);
+			}
+			
+			laststatus = log.getStatus();
 		}
+		s.close();
 
 		return dataset;
 
@@ -228,5 +251,8 @@ public class LineChart {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	public Vector<Log> getTextlog() {
+		return textlog;
 	}
 }

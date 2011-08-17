@@ -9,23 +9,30 @@ import java.sql.Blob;
 import java.util.Date;
 
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.lob.BlobImpl;
 
 import cn.com.lazyhome.qqstatus.bean.Log;
 
+/**
+ * 检查QQ状态
+ * @author Administrator
+ *
+ */
 public class CheckStatus {
 	private static org.apache.commons.logging.Log logger = LogFactory.getLog(CheckStatus.class);
 
-	private static String url_begin = "http://wpa.qq.com/pa?p=2:";
-	private static String url_end = ":41";
+	public static String URL_BEGIN = "http://wpa.qq.com/pa?p=2:";
+	public static String URL_END = ":41";
+	public static long IMAGE_SIZE;
 	
-	private long onlength = 1243;
-	private long offlength = 1252;
+//	private long onlength = 1243;
+//	private long offlength = 1252;
 
-	public void checking(String qqno) {
-		String url_s = url_begin + qqno + url_end;
+	/**
+	 * 根据QQ号查完状态返回封装好的记录
+	 */
+	public Log checking(String qqno) {
+		String url_s = URL_BEGIN + qqno + URL_END;
 
 		try {
 			URL url = new URL(url_s);
@@ -48,7 +55,7 @@ public class CheckStatus {
 			long nEndPos =getFileSize(url_s);
 			logger.debug(String .valueOf(nEndPos));
 			int status = 0;
-			status = onlength == nEndPos?1:0;
+			status = IMAGE_SIZE == nEndPos?1:0;
 			logger.debug(String .valueOf(status));
 			
 			Blob file = new BlobImpl(baos.toByteArray());
@@ -59,13 +66,12 @@ public class CheckStatus {
 			log.setFileSize((int)nEndPos);
 			log.setFile(file);
 			
-			Session s = HibernateUtil.getSessionFactory().openSession();
-			Transaction t = s.beginTransaction();
-			s.save(log);
-			t.commit();
-			s.close();
+			
+			return log;
 		} catch (IOException e) {
 			logger.fatal(e.getMessage(), e);
+			
+			return null;
 		}
 
 	}
@@ -80,7 +86,8 @@ public class CheckStatus {
 
 			int responseCode = httpConnection.getResponseCode();
 			if (responseCode >= 400) {
-				System.err.println("Error Code : " + responseCode);
+				logger.debug("Error Code : " + responseCode);
+				
 				return -2; // -2 represent access is error
 			}
 			String sHeader;
@@ -98,7 +105,8 @@ public class CheckStatus {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(nFileLength);
+		logger.debug(nFileLength);
+		
 		return nFileLength;
 	}
 

@@ -6,15 +6,24 @@ import java.util.List;
 import java.util.TimerTask;
 import java.util.Vector;
 
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
 import cn.com.lazyhome.qqstatus.LineChart;
 import cn.com.lazyhome.qqstatus.bean.Concern;
+import cn.com.lazyhome.qqstatus.bean.Log;
 import cn.com.lazyhome.util.mail.neteasy.MailSenderInfo;
 import cn.com.lazyhome.util.mail.neteasy.SimpleMailSender;
 
+/**
+ * 邮件通知
+ * @author Administrator
+ *
+ */
 public class MailNotify extends TimerTask  {
+	private static org.apache.commons.logging.Log logger = LogFactory.getLog(MailNotify.class);
+	
 	private boolean repeat = true;
 
 	public void run() {
@@ -23,9 +32,9 @@ public class MailNotify extends TimerTask  {
 		do {
 			Session s = HibernateUtil.getSessionFactory().openSession();
 			Query q = s.createQuery(hql);
-			CheckStatus check = new CheckStatus();
 			
 			
+			@SuppressWarnings("unchecked")
 			List<Concern> concerns = q.list();
 			
 			int size = concerns.size();
@@ -34,6 +43,10 @@ public class MailNotify extends TimerTask  {
 				String qq = c.getQqId();
 				String mail = c.getMail();
 //				check.checking(qq);
+				if(mail == null || mail.trim().equals("")) {
+					// 邮箱若为空，则跳过下一个不发送
+					continue;
+				}
 				
 				LineChart chart = new LineChart(qq);
 				Calendar cal = new GregorianCalendar();
@@ -42,6 +55,16 @@ public class MailNotify extends TimerTask  {
 				
 				try {
 					String file = chart.writeImage();
+					StringBuffer sb = new StringBuffer();
+					Vector<Log> logs = new Vector<Log>();
+					Log log;
+					for(int j=0; j<logs.size(); j++) {
+						log = logs.get(j);
+						sb.append(log.getTime());
+						sb.append(" - ");
+						sb.append(log.getStatus());
+						sb.append("\n");
+					}
 					
 					MailSenderInfo mailInfo = new MailSenderInfo();
 					mailInfo.setMailProp(MailSenderInfo.getGmailProp());
@@ -50,7 +73,7 @@ public class MailNotify extends TimerTask  {
 					mailInfo.setFromAddress("dch438@163.com");
 					mailInfo.setToAddress(mail);
 					mailInfo.setSubject(qq + "状态");
-					mailInfo.setContent("QQ	在线状态跟踪");
+					mailInfo.setContent(sb.toString());
 					
 					// 附件图片
 					Vector<String> attchment = new Vector<String>();
@@ -62,7 +85,7 @@ public class MailNotify extends TimerTask  {
 //					sms.sendTextMail(mailInfo);// 发送文体格式
 					SimpleMailSender.sendHtmlMail(mailInfo);// 发送html格式
 				} catch (Exception e) {
-					//TODO
+					logger.fatal(e.getMessage(), e);
 				}
 			}
 			
