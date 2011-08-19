@@ -25,7 +25,7 @@ public class SysConfig {
 	private long imageSize;
 	
 	public void load(String filepath) {
-
+		logger.info("loading properties...");
 		Properties props = new Properties();
 		try {
 			// 从配置文件读取参数
@@ -87,6 +87,8 @@ public class SysConfig {
 			logger.warn("failed load qqstatus.properties file!! use the default config.");
 			logger.warn(e.getMessage(), e);
 		}
+		
+		logger.info("properties is loaded.");
 	}
 
 	public long getMailPeriod() {

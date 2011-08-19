@@ -30,6 +30,7 @@ public class Init implements ServletContextListener {
 		SysConfig conf = new SysConfig();
 		conf.load(file);
 
+		logger.debug("config paramter");
 		LineChart.WIDTH = conf.getImageWidth();
 		LineChart.HEIGHT = conf.getImageHeight();
 		CheckStatus.URL_BEGIN = conf.getImageUrlBegin();
