@@ -1,5 +1,10 @@
 package cn.com.lazyhome.qqstatus.util;
 
+import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+
 import cn.com.lazyhome.qqstatus.bean.Log;
 import cn.com.lazyhome.util.mail.neteasy.MailSenderInfo;
 
@@ -13,11 +18,20 @@ public class Tracker implements Runnable {
 	private String qq = "109719189";
 	private String mail = "18957689879@189.cn";
 	private Log laststat;
+	private long period = 60000;
 
+	@SuppressWarnings("unchecked")
 	public void run() {
 		while(run) {
-			CheckStatus check = new CheckStatus();
-			Log log = check.checking(qq);
+			Session s = HibernateUtil.getSessionFactory().openSession();
+			String hql = "from Log l where l.qqId = ? order by l.time desc";
+			Query q = s.createQuery(hql);
+			q.setString(0, qq);
+			q.setMaxResults(1);
+			
+			List<Log> logs = q.list();
+			Log log = logs.get(0);
+			s.close();
 			
 			if(laststat == null) {
 				laststat = log;
@@ -30,7 +44,7 @@ public class Tracker implements Runnable {
 				MailSenderInfo mailInfo = new MailSenderInfo();
 				mailInfo.setMailProp(MailSenderInfo.getGmailProp());
 				mailInfo.setUserName("dchrainbow@gmail.com");
-				mailInfo.setPassword("d19840226");// ƒ˙µƒ” œ‰√‹¬Î
+				mailInfo.setPassword("d19840226");
 				mailInfo.setFromAddress("dch438@163.com");
 				mailInfo.setToAddress(mail);
 				mailInfo.setSubject(qq + " - " + log.getStatus() + " - " + log.getTime());
@@ -40,7 +54,7 @@ public class Tracker implements Runnable {
 			
 			synchronized (this) {
 				try {
-					this.wait(60000);
+					this.wait(period);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -54,6 +68,14 @@ public class Tracker implements Runnable {
 
 	public void setRun(boolean run) {
 		this.run = run;
+	}
+
+	public long getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(long period) {
+		this.period = period;
 	}
 
 }
