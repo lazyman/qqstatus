@@ -61,7 +61,6 @@ public class Init implements ServletContextListener {
 		firstTime.set(Calendar.MINUTE, 0);
 		firstTime.set(Calendar.SECOND, 0);
 
-		logger.info(firstTime.before(Calendar.getInstance()));
 		if(firstTime.before(Calendar.getInstance())) {
 			firstTime.add(Calendar.DAY_OF_YEAR, 1);
 		}
