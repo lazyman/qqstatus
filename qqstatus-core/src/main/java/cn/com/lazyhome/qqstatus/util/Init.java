@@ -1,8 +1,6 @@
 package cn.com.lazyhome.qqstatus.util;
 
-import java.io.FileInputStream;
 import java.util.Calendar;
-import java.util.Properties;
 import java.util.Timer;
 
 import javax.servlet.ServletContextEvent;
