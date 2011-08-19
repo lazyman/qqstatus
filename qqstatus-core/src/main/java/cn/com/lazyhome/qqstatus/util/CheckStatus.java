@@ -53,10 +53,10 @@ public class CheckStatus {
 
 			// 获得文件长度
 			long nEndPos =getFileSize(url_s);
-			logger.debug(String .valueOf(nEndPos));
+			logger.debug("end pos:" + String.valueOf(nEndPos));
 			int status = 0;
 			status = IMAGE_SIZE == nEndPos?1:0;
-			logger.debug(String .valueOf(status));
+			logger.debug("status:" + String .valueOf(status));
 			
 			Blob file = new BlobImpl(baos.toByteArray());
 			Log log = new Log();
@@ -105,7 +105,7 @@ public class CheckStatus {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		logger.debug(nFileLength);
+		logger.debug("file size:" + nFileLength);
 		
 		return nFileLength;
 	}

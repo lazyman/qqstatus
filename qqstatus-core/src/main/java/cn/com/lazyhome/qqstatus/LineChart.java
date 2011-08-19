@@ -126,6 +126,7 @@ public class LineChart {
 		yestoday.add(Calendar.DATE, -days);
 		q.setCalendar(2, yestoday);
 
+		@SuppressWarnings("unchecked")
 		List<Log> logs = q.list();
 
 		// create the dataset...

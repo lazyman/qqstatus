@@ -1,5 +1,6 @@
 package cn.com.lazyhome.qqstatus.util;
 
+import java.io.FileInputStream;
 import java.util.Calendar;
 import java.util.Properties;
 import java.util.Timer;
@@ -26,13 +27,13 @@ public class Init implements ServletContextListener {
 	 */
 	public void contextInitialized(ServletContextEvent event) {
 		rootpath = event.getServletContext().getRealPath("/");
-		//间隔1天
+		//间隔1天，邮件通知任务
 		long period;
 		// 延迟一定时间执行
-		@SuppressWarnings("unused")
 		long delay;
+		// 检查在线状态间隔
 		long fetch_period;
-		// 图片大小
+		// 统计信息图片大小
 		int width, height;
 		String url_begin;
 		String url_end;
@@ -40,11 +41,15 @@ public class Init implements ServletContextListener {
 		
 		Properties props = new Properties();
 		try {
-			props.load(this.getClass().getResourceAsStream("qqstatus.properties"));
-			String prop = props.getProperty("task.period");
+			// 从配置文件读取参数
+			String file = rootpath + "/WEB-INF/classes/qqstatus.properties";
+			logger.debug("qqstatus.properties path:\t" + file);
+			FileInputStream fis = new FileInputStream(file);
+			props.load(fis);
+			String prop = props.getProperty("mail.notify.period");
 			period = Long.parseLong(prop);
 			
-			prop = props.getProperty("task.delay");
+			prop = props.getProperty("mail.notify.delay");
 			delay = Long.parseLong(prop);
 			
 			prop = props.getProperty("fetcher.period");
@@ -75,7 +80,7 @@ public class Init implements ServletContextListener {
 			url_end = ":41";
 			imageSize = 1243;
 			
-			logger.info("failed load qqstatus.properties file!! use the default config.");
+			logger.warn("failed load qqstatus.properties file!! use the default config.");
 			logger.warn(e.getMessage(), e);
 		}
 
@@ -85,16 +90,18 @@ public class Init implements ServletContextListener {
 		CheckStatus.URL_END = url_end;
 		CheckStatus.IMAGE_SIZE = imageSize;
 		
+		// 定时查询状态
 		fetcher = new FetchStatus();
 		fetcher.setPeriod(fetch_period);
 		
 		thread = new Thread(fetcher);
 		thread.start();
 		
+		// 上线邮件通知
 		tracker = new Tracker();
 		new Thread(tracker).start();
 		
-		
+		// 每日历史状态通知
 		Timer timer = new Timer(true);
 		MailNotify task = new MailNotify();
 		task.setRepeat(false);

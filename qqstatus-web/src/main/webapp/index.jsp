@@ -31,7 +31,7 @@ QQ:<s:textfield name="qqId"></s:textfield>
 
 <br />
 <a name="bottom"></a>
-<s:form theme="simple" action="show#bottom" method="get">
+<s:form theme="simple" action="showpic#bottom" method="get">
 
 <s:date name="date" format="yyyy-MM-dd" var="datestr" />
 QQ:<s:textfield name="qqId"></s:textfield>

@@ -3,6 +3,11 @@ package cn.com.lazyhome.qqstatus.util;
 import cn.com.lazyhome.qqstatus.bean.Log;
 import cn.com.lazyhome.util.mail.neteasy.MailSenderInfo;
 
+/**
+ * 跟踪QQ状态，只要一上线就发到目标邮箱。
+ * @author Administrator
+ *
+ */
 public class Tracker implements Runnable {
 	private boolean run = true;
 	private String qq = "109719189";

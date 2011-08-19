@@ -17,7 +17,7 @@
 			<result>index.jsp</result>
 			<result name="no-data">input.jsp</result>
 		</action>
-		<action name="showpic" class="cn.com.lazyhome.qqstatus.action.ShowPic" method="showtext">
+		<action name="showtext" class="cn.com.lazyhome.qqstatus.action.ShowText" method="showtext">
 			<result>showtext.jsp</result>
 			<result name="no-data">input.jsp</result>
 		</action>

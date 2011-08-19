@@ -20,6 +20,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author Administrator
  *
  */
+@SuppressWarnings("serial")
 public class Record extends ActionSupport implements ServletRequestAware {
 	private Concern concern;
 	private HttpServletRequest request;
@@ -44,6 +45,7 @@ public class Record extends ActionSupport implements ServletRequestAware {
 		q.setString(0, concern.getQqId());
 		q.setString(1, concern.getMail());
 		
+		@SuppressWarnings("unchecked")
 		List<Concern> l = q.list();
 		if(l.size() >0) {
 			addActionMessage("你正在关注QQ:" + concern.getQqId() + "，无需重复提交。");
