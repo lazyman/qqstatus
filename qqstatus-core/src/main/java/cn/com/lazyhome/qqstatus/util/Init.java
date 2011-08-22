@@ -53,8 +53,8 @@ public class Init implements ServletContextListener {
 		
 		// 每日历史状态通知
 		Timer timer = new Timer(true);
-		MailNotify task = new MailNotify();
-		task.setRepeat(false);
+		MailNotify mailNotify = new MailNotify();
+		mailNotify.setRepeat(false);
 		
 		Calendar firstTime = Calendar.getInstance();
 
@@ -66,7 +66,7 @@ public class Init implements ServletContextListener {
 			firstTime.add(Calendar.DAY_OF_YEAR, 1);
 		}
 		
-		timer.schedule(task, firstTime.getTime(), conf.getMailPeriod());
+		timer.schedule(mailNotify, firstTime.getTime(), conf.getMailPeriod());
 	}
 
 	/**
