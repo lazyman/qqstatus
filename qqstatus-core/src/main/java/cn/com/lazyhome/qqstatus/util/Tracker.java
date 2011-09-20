@@ -2,11 +2,13 @@ package cn.com.lazyhome.qqstatus.util;
 
 import java.util.List;
 
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
 import cn.com.lazyhome.qqstatus.bean.Log;
 import cn.com.lazyhome.util.mail.neteasy.MailSenderInfo;
+import cn.com.lazyhome.util.mail.neteasy.SimpleMailSender;
 
 /**
  * 跟踪QQ状态，只要一上线就发到目标邮箱。
@@ -14,6 +16,8 @@ import cn.com.lazyhome.util.mail.neteasy.MailSenderInfo;
  *
  */
 public class Tracker implements Runnable {
+	private static org.apache.commons.logging.Log logger = LogFactory.getLog(Tracker.class);
+	
 	private boolean run = true;
 	private String qq = "109719189";
 	private String mail = "18957689879@189.cn";
@@ -30,25 +34,36 @@ public class Tracker implements Runnable {
 			q.setMaxResults(1);
 			
 			List<Log> logs = q.list();
-			Log log = logs.get(0);
+			Log log = null;
+			if (logs.size() > 0 )
+				log = logs.get(0);
 			s.close();
 			
 			if(laststat == null) {
 				laststat = log;
-				continue;
-			}
-			
-			if(laststat.getStatus() != log.getStatus()) {
-				laststat = log;
 				
-				MailSenderInfo mailInfo = new MailSenderInfo();
-				mailInfo.setMailProp(MailSenderInfo.getGmailProp());
-				mailInfo.setUserName("dchrainbow@gmail.com");
-				mailInfo.setPassword("d19840226");
-				mailInfo.setFromAddress("dch438@163.com");
-				mailInfo.setToAddress(mail);
-				mailInfo.setSubject(qq + " - " + log.getStatus() + " - " + log.getTime());
-				mailInfo.setContent(log.getStatus() + " - " + log.getTime());
+				// 将第一次的跟踪状态显示到日志中
+				if(log != null) {
+					logger.info("Tracker from:" + qq + " - " + log.getStatus());
+				} else {
+					logger.info("Tracker:null" );
+				}
+			} else {
+				if(laststat.getStatus() != log.getStatus()) {
+					logger.info("found the status changed, send message to mail");
+					laststat = log;
+					
+					MailSenderInfo mailInfo = new MailSenderInfo();
+					mailInfo.setMailProp(MailSenderInfo.getGmailProp());
+					mailInfo.setUserName("dchrainbow@gmail.com");
+					mailInfo.setPassword("d19840226");
+					mailInfo.setFromAddress("dch438@163.com");
+					mailInfo.setToAddress(mail);
+					mailInfo.setSubject(qq + " - " + log.getStatus() + " - " + log.getTime());
+					mailInfo.setContent(log.getStatus() + " - " + log.getTime());
+					
+					SimpleMailSender.sendHtmlMail(mailInfo);
+				}
 			}
 			
 			
