@@ -54,11 +54,12 @@ public class ShowText extends ActionSupport {
 		if(date != null ) {
 			c.setTime(date);
 		} else {
-			c.set(Calendar.HOUR, 0);
+			c.set(Calendar.HOUR_OF_DAY, 0);
 			c.set(Calendar.MINUTE, 0);
 			c.set(Calendar.SECOND, 0);
 			c.set(Calendar.MILLISECOND, 0);
 		}
+		date = c.getTime();
 		
 		c.add(Calendar.DATE, 1);
 		q.setCalendar(1, c);
