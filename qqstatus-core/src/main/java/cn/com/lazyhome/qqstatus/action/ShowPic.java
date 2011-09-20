@@ -21,11 +21,19 @@ public class ShowPic extends ActionSupport {
 	@Override
 	public String execute() throws Exception {
 		LineChart chart = new LineChart(qqId);
+		
+		// 当输入日期为空时，取当天日期
+		Calendar c = new GregorianCalendar();
 		if(date != null ) {
-			Calendar c = new GregorianCalendar();
 			c.setTime(date);
-			chart.setBegintime(c);
+		} else {
+			c.set(Calendar.HOUR, 0);
+			c.set(Calendar.MINUTE, 0);
+			c.set(Calendar.SECOND, 0);
+			c.set(Calendar.MILLISECOND, 0);
 		}
+		
+		chart.setBegintime(c);
 		try {
 			chart.writeImage();
 		} catch (Exception e) {

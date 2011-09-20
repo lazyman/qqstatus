@@ -49,8 +49,16 @@ public class ShowText extends ActionSupport {
 		Query q = s.createQuery(hql);
 		q.setString(0, qqId);
 
+		// 当输入日期为空时，取当天日期
 		Calendar c = new GregorianCalendar();
-		c.setTime(date);
+		if(date != null ) {
+			c.setTime(date);
+		} else {
+			c.set(Calendar.HOUR, 0);
+			c.set(Calendar.MINUTE, 0);
+			c.set(Calendar.SECOND, 0);
+			c.set(Calendar.MILLISECOND, 0);
+		}
 		
 		c.add(Calendar.DATE, 1);
 		q.setCalendar(1, c);
