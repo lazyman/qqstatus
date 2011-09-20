@@ -1,5 +1,6 @@
 package cn.com.lazyhome.qqstatus.util;
 
+import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Timer;
 
@@ -28,7 +29,9 @@ public class Init implements ServletContextListener {
 
 		String file = rootpath + "/WEB-INF/classes/qqstatus.properties";
 		SysConfig conf = new SysConfig();
-		conf.load(file);
+
+		InputStream is = getClass().getResourceAsStream("/qqstatus.properties");
+		conf.load(is);
 
 		logger.debug("config paramter");
 		LineChart.WIDTH = conf.getImageWidth();

@@ -1,6 +1,6 @@
 package cn.com.lazyhome.qqstatus.util;
 
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Properties;
 
 import org.apache.commons.logging.Log;
@@ -11,6 +11,7 @@ public class SysConfig {
 	
 	// 间隔1天，邮件通知任务
 	private long mailPeriod;
+	private long mailDelay;
 	// 采集器启动开关
 	private boolean runFetcher, runTracker;
 	// 延迟一定时间执行
@@ -24,15 +25,15 @@ public class SysConfig {
 	private String imageUrlEnd;
 	private long imageSize;
 	
-	public void load(String filepath) {
+	public void load(InputStream is) {
 		logger.info("loading properties...");
 		Properties props = new Properties();
 		try {
 			// 从配置文件读取参数
-			String file = filepath;
-			logger.debug("qqstatus.properties path:\t" + file);
-			FileInputStream fis = new FileInputStream(file);
-			props.load(fis);
+//			String file = is;
+//			logger.debug("qqstatus.properties path:\t" + file);
+//			FileInputStream fis = new FileInputStream(file);
+			props.load(is);
 			String prop;
 			
 			prop = props.getProperty("fetcher.period");
@@ -66,7 +67,7 @@ public class SysConfig {
 			mailPeriod = Long.parseLong(prop);
 			
 			prop = props.getProperty("mail.notify.delay");
-			fetcherdelay = Long.parseLong(prop);
+			mailDelay = Long.parseLong(prop);
 			
 		} catch (Exception e) {
 			runFetcher = false;
@@ -177,6 +178,14 @@ public class SysConfig {
 
 	public void setImageSize(long imageSize) {
 		this.imageSize = imageSize;
+	}
+
+	public long getMailDelay() {
+		return mailDelay;
+	}
+
+	public void setMailDelay(long mailDelay) {
+		this.mailDelay = mailDelay;
 	}
 	
 	
