@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Vector;
 
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -22,6 +23,8 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 @SuppressWarnings("serial")
 public class ShowText extends ActionSupport {
+	private static org.apache.commons.logging.Log logger = LogFactory.getLog(ShowText.class);
+	
 	private String qqId;
 	private Date date;
 	private Vector<Log> textlog;

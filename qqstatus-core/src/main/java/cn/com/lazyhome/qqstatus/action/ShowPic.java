@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.apache.commons.logging.LogFactory;
+
 import cn.com.lazyhome.qqstatus.LineChart;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -15,6 +17,8 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 @SuppressWarnings("serial")
 public class ShowPic extends ActionSupport {
+	private static org.apache.commons.logging.Log logger = LogFactory.getLog(ShowPic.class);
+	
 	private String qqId;
 	private Date date;
 
@@ -38,6 +42,7 @@ public class ShowPic extends ActionSupport {
 		try {
 			chart.writeImage();
 		} catch (Exception e) {
+			logger.debug(e.getMessage());
 			return e.getMessage();
 		}
 		

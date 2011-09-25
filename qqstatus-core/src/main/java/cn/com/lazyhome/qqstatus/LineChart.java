@@ -13,6 +13,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Vector;
 
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.jfree.chart.ChartFactory;
@@ -32,6 +33,8 @@ import cn.com.lazyhome.qqstatus.util.HibernateUtil;
 import cn.com.lazyhome.qqstatus.util.Init;
 
 public class LineChart {
+	private static org.apache.commons.logging.Log logger = LogFactory.getLog(LineChart.class);
+	
 	public static int WIDTH = 200;
 	public static int HEIGHT = 3000;
 	private String qqid = "84074663";
@@ -54,12 +57,13 @@ public class LineChart {
 
 	public String writeImage() throws Exception {
 		final CategoryDataset dataset = createDataset();
-		final JFreeChart chart = createChart(dataset);
 		SimpleDateFormat sdf = new SimpleDateFormat("-yyyy-MM-dd");
 		
 		if(dataset.getRowCount() == 0) {
 			throw new Exception("no-data");
 		}
+		final JFreeChart chart = createChart(dataset);
+		
 		try {
 			String root = Init.getRootpath();
 			if(root == null) {
@@ -133,19 +137,23 @@ public class LineChart {
 		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		textlog = new Vector<Log>();
 
-		int laststatus = logs.get(0).getStatus();
-		int size = logs.size();
-		for (int i = 0; i < size; i++) {
-			Log log = logs.get(i);
-			// 用于图表的数据
-			dataset.addValue(log.getStatus(), qqid, sdf.format(log.getTime()));
-			
-			// 纯文本数据，只记录每个转折点 
-			if(log.getStatus() != laststatus ) {
-				textlog.add(log);
+		if(logs.size() > 0) {
+			int laststatus = logs.get(0).getStatus();
+			int size = logs.size();
+			for (int i = 0; i < size; i++) {
+				Log log = logs.get(i);
+				// 用于图表的数据
+				dataset.addValue(log.getStatus(), qqid, sdf.format(log.getTime()));
+				
+				// 纯文本数据，只记录每个转折点 
+				if(log.getStatus() != laststatus ) {
+					textlog.add(log);
+				}
+				
+				laststatus = log.getStatus();
 			}
-			
-			laststatus = log.getStatus();
+		} else {
+			logger.info(qqid + "has no data now!");
 		}
 		s.close();
 
