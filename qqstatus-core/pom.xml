@@ -12,7 +12,6 @@
   	<dependency>
   		<groupId>net.sourceforge.jtds</groupId>
   		<artifactId>jtds</artifactId>
-  		<version>1.2.2</version>
   		<type>jar</type>
   		<scope>runtime</scope>
   	</dependency>
@@ -33,6 +32,12 @@
   		<artifactId>mail</artifactId>
   		<version>1.4.3</version>
   		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>mysql</groupId>
+  		<artifactId>mysql-connector-java</artifactId>
+  		<type>jar</type>
+  		<scope>runtime</scope>
   	</dependency>
   </dependencies>
   <modules>
