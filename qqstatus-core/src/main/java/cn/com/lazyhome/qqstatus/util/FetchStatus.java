@@ -18,9 +18,10 @@ public class FetchStatus implements Runnable {
 	public void run() {
 		String hql = "select distinct c.qqId from Concern c";
 
+		Session s = null;
 		while (run) {
 			try {
-				Session s = HibernateUtil.getSessionFactory().openSession();
+				s = HibernateUtil.getSessionFactory().openSession();
 				Query q = s.createQuery(hql);
 				CheckStatus check = new CheckStatus();
 	
@@ -37,11 +38,11 @@ public class FetchStatus implements Runnable {
 					s.save(log);
 					t.commit();
 				}
-				
-				s.close();
 			} catch (Exception e) {
 				// 采集图片信息出错时不致线程终止
 				logger.error(e.getMessage(), e);
+			} finally {
+				s.close();
 			}
 			
 			synchronized (this) {
