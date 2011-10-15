@@ -27,7 +27,7 @@ public class Init implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent event) {
 		rootpath = event.getServletContext().getRealPath("/");
 
-		String file = rootpath + "/WEB-INF/classes/qqstatus.properties";
+		//String file = rootpath + "/WEB-INF/classes/qqstatus.properties";
 		SysConfig conf = new SysConfig();
 
 		InputStream is = getClass().getResourceAsStream("/qqstatus.properties");
