@@ -15,7 +15,7 @@
             <column name="delay_" />
         </property>
         <property name="mail" type="string">
-            <column name="mail_" length="10" />
+            <column name="mail_" length="100" />
         </property>
         <property name="receivedTime" type="java.lang.Integer">
             <column name="received_time_" />
