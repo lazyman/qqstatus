@@ -20,6 +20,12 @@
         <property name="receivedTime" type="java.lang.Integer">
             <column name="received_time_" />
         </property>
+        <property name="trace" type="string">
+            <column name="trace_" />
+        </property>
+        <property name="traceMail" type="string">
+            <column name="trace_mail_" length="100" />
+        </property>
         <property name="createTime" type="timestamp">
             <column name="create_time_" length="23" />
         </property>

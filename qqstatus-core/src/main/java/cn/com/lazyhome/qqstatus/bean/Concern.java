@@ -15,6 +15,8 @@ public class Concern implements java.io.Serializable {
 	private Integer delay;
 	private String mail;
 	private Integer receivedTime;
+	private String trace;
+	private String traceMail;
 	private Date createTime;
 	private String createIp;
 
@@ -91,6 +93,22 @@ public class Concern implements java.io.Serializable {
 
 	public void setCreateIp(String createIp) {
 		this.createIp = createIp;
+	}
+
+	public String getTrace() {
+		return trace;
+	}
+
+	public void setTrace(String trace) {
+		this.trace = trace;
+	}
+
+	public String getTraceMail() {
+		return traceMail;
+	}
+
+	public void setTraceMail(String traceMail) {
+		this.traceMail = traceMail;
 	}
 
 }
