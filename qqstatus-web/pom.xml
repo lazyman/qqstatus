@@ -3,7 +3,7 @@
   <groupId>cn.com.lazyhome.qqstatus</groupId>
   <artifactId>qqstatus-web</artifactId>
   <packaging>war</packaging>
-  <version>1.1.0</version>
+  <version>1.1.2</version>
   <dependencies>
   	<dependency>
   		<groupId>cn.com.lazyhome.qqstatus</groupId>

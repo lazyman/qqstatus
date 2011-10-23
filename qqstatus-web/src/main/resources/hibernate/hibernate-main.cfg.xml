@@ -5,26 +5,26 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
-        <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">db~123456</property>
+        <property name="hibernate.connection.username">enetbak</property>
+        <property name="hibernate.connection.password">678enetbak123</property>
         <!-- 
         	驱动类
         	mssql=>net.sourceforge.jtds.jdbc.Driver
         	mysql=>com.mysql.jdbc.Driver
          -->
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.driver_class">net.sourceforge.jtds.jdbc.Driver</property>
         <!--
         	URL 
-        	MSSQL=>jdbc:jtds:sqlserver://netpc.tingoo.org:1433/qqstatus
+        	MSSQL=>jdbc:jtds:sqlserver://127.0.0.1:1433/qqstatus
         	mysql=>jdbc:mysql://localhost:3306/qqstatus?useUnicode=true&amp;characterEncoding=UTF-8
          -->
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/qqstatus?useUnicode=true&amp;characterEncoding=UTF-8</property>
+        <property name="hibernate.connection.url">jdbc:jtds:sqlserver://127.0.0.1:1433/enetbak</property>
         <!-- 
         	数据库语法 
 	        mssql：org.hibernate.dialect.SQLServerDialect
 	        mysql：org.hibernate.dialect.MySQL5Dialect 
          -->
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
         <property name="hibernate.search.autoregister_listeners">false</property>
         <!-- 提供参数确定是否自动建表 create：先删后建， update：更新现有表结构 -->
         <property name="hibernate.hbm2ddl.auto">update</property>

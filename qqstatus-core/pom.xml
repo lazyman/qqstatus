@@ -1,18 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<parent>
-		<artifactId>webpom</artifactId>
-		<groupId>cn.com.lazyhome.pom</groupId>
-		<version>3</version>
-	</parent>
 	<modelVersion>4.0.0</modelVersion>
   <groupId>cn.com.lazyhome.qqstatus</groupId>
   <artifactId>qqstatus-core</artifactId>
-  <version>1.1.0</version>
+  <version>1.1.2</version>
   <dependencies>
   	<dependency>
   		<groupId>net.sourceforge.jtds</groupId>
   		<artifactId>jtds</artifactId>
-  		<type>jar</type>
+  		<version>1.2.2</version>
   		<scope>runtime</scope>
   	</dependency>
   	<dependency>
@@ -24,20 +19,40 @@
   		<groupId>org.apache.struts</groupId>
   		<artifactId>struts2-core</artifactId>
   		<version>2.2.1.1</version>
-  		<type>jar</type>
-  		<scope>compile</scope>
   	</dependency>
   	<dependency>
   		<groupId>javax.mail</groupId>
   		<artifactId>mail</artifactId>
   		<version>1.4.3</version>
-  		<scope>compile</scope>
   	</dependency>
   	<dependency>
-  		<groupId>mysql</groupId>
-  		<artifactId>mysql-connector-java</artifactId>
-  		<type>jar</type>
+  		<groupId>javax.servlet</groupId>
+  		<artifactId>servlet-api</artifactId>
+  		<version>2.5</version>
+  		<scope>provided</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>javax.servlet.jsp</groupId>
+  		<artifactId>jsp-api</artifactId>
+  		<version>2.1</version>
+  		<scope>provided</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.hibernate</groupId>
+  		<artifactId>hibernate</artifactId>
+  		<version>3.2.7.ga</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>jboss</groupId>
+  		<artifactId>javassist</artifactId>
+  		<version>3.7.ga</version>
   		<scope>runtime</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>junit</groupId>
+  		<artifactId>junit</artifactId>
+  		<version>4.8.2</version>
+  		<scope>test</scope>
   	</dependency>
   </dependencies>
   <modules>
