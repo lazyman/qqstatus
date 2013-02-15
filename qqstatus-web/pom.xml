@@ -4,6 +4,20 @@
   <artifactId>qqstatus-web</artifactId>
   <packaging>war</packaging>
   <version>1.1.2</version>
+  <build>
+  	<plugins>
+  		<plugin>
+  			<groupId>org.codehaus.mojo</groupId>
+  			<artifactId>tomcat-maven-plugin</artifactId>
+  			<version>1.1</version>
+  			<configuration>
+				<path>/qqstatus</path>
+				<url>http://localhost:8080/manager/html</url>
+  				<server>tomcat</server>
+  			</configuration>
+  		</plugin>
+  	</plugins>
+  </build>
   <dependencies>
   	<dependency>
   		<groupId>cn.com.lazyhome.qqstatus</groupId>
