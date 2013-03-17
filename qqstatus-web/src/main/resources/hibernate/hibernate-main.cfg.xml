@@ -5,8 +5,8 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
-        <property name="hibernate.connection.username">enetbak</property>
-        <property name="hibernate.connection.password">678enetbak123</property>
+        <property name="hibernate.connection.username">qqstatus</property>
+        <property name="hibernate.connection.password">d~123456</property>
         <!-- 
         	驱动类
         	mssql=>net.sourceforge.jtds.jdbc.Driver
@@ -18,7 +18,7 @@
         	MSSQL=>jdbc:jtds:sqlserver://127.0.0.1:1433/qqstatus
         	mysql=>jdbc:mysql://localhost:3306/qqstatus?useUnicode=true&amp;characterEncoding=UTF-8
          -->
-        <property name="hibernate.connection.url">jdbc:jtds:sqlserver://127.0.0.1:1433/enetbak</property>
+        <property name="hibernate.connection.url">jdbc:jtds:sqlserver://192.168.3.191:1433/qqstatus-test</property>
         <!-- 
         	数据库语法 
 	        mssql：org.hibernate.dialect.SQLServerDialect
