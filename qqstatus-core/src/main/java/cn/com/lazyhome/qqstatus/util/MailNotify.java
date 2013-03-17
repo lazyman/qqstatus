@@ -17,7 +17,8 @@ import cn.com.lazyhome.util.mail.neteasy.MailSenderInfo;
 import cn.com.lazyhome.util.mail.neteasy.SimpleMailSender;
 
 /**
- * 邮件通知
+ * 邮件通知<br />
+ * 每天报送上一天QQ上线情况（mail字段不为空）
  * @author Administrator
  *
  */

@@ -3,34 +3,43 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 2011-3-14 22:03:56 by Hibernate Tools 3.3.0.GA -->
 <hibernate-mapping>
-    <class name="cn.com.lazyhome.qqstatus.bean.Concern" table="concern_" >
-        <id name="id" type="int">
-            <column name="id_" />
-            <generator class="native" />
-        </id>
-        <property name="qqId" type="string">
-            <column name="qq_id_" length="50" not-null="true" />
-        </property>
-        <property name="delay" type="java.lang.Integer">
-            <column name="delay_" />
-        </property>
-        <property name="mail" type="string">
-            <column name="mail_" length="100" />
-        </property>
-        <property name="receivedTime" type="java.lang.Integer">
-            <column name="received_time_" />
-        </property>
-        <property name="trace" type="string">
-            <column name="trace_" />
-        </property>
-        <property name="traceMail" type="string">
-            <column name="trace_mail_" length="100" />
-        </property>
-        <property name="createTime" type="timestamp">
-            <column name="create_time_" length="23" />
-        </property>
-        <property name="createIp" type="string">
-            <column name="create_ip_" length="15" />
-        </property>
-    </class>
+	<class name="cn.com.lazyhome.qqstatus.bean.Concern" table="concern_">
+		<id name="id" type="int">
+			<column name="id_" />
+			<generator class="native" />
+		</id>
+		<property name="qqId" type="string">
+			<column name="qq_id_" length="50" not-null="true" />
+		</property>
+		<property name="nick" type="string">
+			<column name="nick_" length="50" not-null="true" />
+		</property>
+		<property name="realname" type="string">
+			<column name="realname_" length="50" not-null="true" />
+		</property>
+		<property name="remark" type="string">
+			<column name="remark_" sql-type="text" not-null="true" />
+		</property>
+		<property name="delay" type="java.lang.Integer">
+			<column name="delay_" />
+		</property>
+		<property name="mail" type="string">
+			<column name="mail_" length="100" />
+		</property>
+		<property name="receivedTime" type="java.lang.Integer">
+			<column name="received_time_" />
+		</property>
+		<property name="trace" type="string">
+			<column name="trace_" />
+		</property>
+		<property name="traceMail" type="string">
+			<column name="trace_mail_" length="100" />
+		</property>
+		<property name="createTime" type="timestamp">
+			<column name="create_time_" length="23" />
+		</property>
+		<property name="createIp" type="string">
+			<column name="create_ip_" length="15" />
+		</property>
+	</class>
 </hibernate-mapping>

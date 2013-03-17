@@ -10,14 +10,53 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class Concern implements java.io.Serializable {
 
+	/**
+	 * 主键
+	 */
 	private int id;
+	/**
+	 * QQ号
+	 */
 	private String qqId;
+	/**
+	 * 昵称、网名、外号
+	 */
+	private String nick;
+	/**
+	 * 真实姓名
+	 */
+	private String realname;
+	/**
+	 * 备注
+	 */
+	private String remark;
+	/**
+	 * 延迟什么？
+	 */
 	private Integer delay;
+	/**
+	 * 接收每天报送上线情况的邮箱
+	 */
 	private String mail;
+	/**
+	 * 接收报送情况的时间
+	 */
 	private Integer receivedTime;
+	/**
+	 * 标志是否跟踪在线状态
+	 */
 	private String trace;
+	/**
+	 * 跟踪时的报送邮箱
+	 */
 	private String traceMail;
+	/**
+	 * 创建时间
+	 */
 	private Date createTime;
+	/**
+	 * 创建人IP
+	 */
 	private String createIp;
 
 	public Concern() {
@@ -109,6 +148,30 @@ public class Concern implements java.io.Serializable {
 
 	public void setTraceMail(String traceMail) {
 		this.traceMail = traceMail;
+	}
+
+	public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+
+	public String getRealname() {
+		return realname;
+	}
+
+	public void setRealname(String realname) {
+		this.realname = realname;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 }

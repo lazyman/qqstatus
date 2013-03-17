@@ -13,7 +13,10 @@ import cn.com.lazyhome.util.mail.neteasy.MailSenderInfo;
 import cn.com.lazyhome.util.mail.neteasy.SimpleMailSender;
 
 /**
- * 跟踪QQ状态，只要一上线就发到目标邮箱。
+ * 跟踪QQ状态，只要一上线就发到目标邮箱。<br />
+ * 邮件格式：<br />
+ * 标题：84074663-0-2013-03-15 21:01:44.313<br />
+ * 内容：0-2013-03-15 21:01:44.313<br />
  * @author Administrator
  *
  */
@@ -34,6 +37,9 @@ public class Tracker implements Runnable {
 			String hql = "from Concern c where c.trace = '1'";
 			Query q = s.createQuery(hql);
 			List<Concern> concerns = q.list();
+
+			StringBuffer sb;
+			String split = " - ";
 			
 			for(int i = 0; i<concerns.size(); i++) {
 				Concern c = concerns.get(i);
@@ -70,8 +76,20 @@ public class Tracker implements Runnable {
 						mailInfo.setPassword("d19840226");
 						mailInfo.setFromAddress("dch438@163.com");
 						mailInfo.setToAddress(c.getTraceMail());
-						mailInfo.setSubject(c.getQqId() + " - " + log.getStatus() + " - " + log.getTime());
-						mailInfo.setContent(log.getStatus() + " - " + log.getTime());
+						
+						sb = new StringBuffer();
+						//邮件标题
+						sb.append(c.getQqId());
+						sb.append(split);
+						sb.append(c.getNick());
+						sb.append(split);
+						sb.append(log.getStatus());
+						sb.append(split);
+						sb.append(log.getTime());
+						
+						mailInfo.setSubject(sb.toString());
+						//邮件内容
+						mailInfo.setContent(sb.toString());
 						
 						SimpleMailSender.sendHtmlMail(mailInfo);
 					}

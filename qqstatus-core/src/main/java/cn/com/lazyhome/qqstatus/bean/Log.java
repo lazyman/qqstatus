@@ -11,12 +11,35 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class Log implements java.io.Serializable {
 
+	/**
+	 * 主键
+	 */
 	private int id;
+	/**
+	 * QQ号
+	 */
 	private String qqId;
+	/**
+	 * 状态：1=在线，0=离线
+	 */
 	private int status;
+	/**
+	 * 状态文件
+	 */
 	private Blob file;
+	/**
+	 * 状态文件大小，通过与预存的文件大小比较，确定是否在线
+	 */
 	private Integer fileSize;
+	/**
+	 * 检查时间
+	 */
 	private Date time;
+	
+	/**
+	 * 关联人
+	 */
+	private Concern concern;
 
 	public Log() {
 	}
@@ -84,6 +107,14 @@ public class Log implements java.io.Serializable {
 
 	public void setTime(Date time) {
 		this.time = time;
+	}
+
+	public Concern getConcern() {
+		return concern;
+	}
+
+	public void setConcern(Concern concern) {
+		this.concern = concern;
 	}
 
 }
