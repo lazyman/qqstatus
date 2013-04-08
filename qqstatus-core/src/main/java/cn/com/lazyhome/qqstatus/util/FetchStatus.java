@@ -47,6 +47,7 @@ public class FetchStatus implements Runnable {
 			
 			synchronized (this) {
 				try {
+					logger.debug("我休息一下");
 					this.wait(period);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
