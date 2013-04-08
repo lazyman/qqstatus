@@ -26,6 +26,9 @@ public class Init implements ServletContextListener {
 	 */
 	public void contextInitialized(ServletContextEvent event) {
 		rootpath = event.getServletContext().getRealPath("/");
+		
+		// 设置web目录属性，用于log4j相对路径的使用
+		System.setProperty("workdir", rootpath);
 
 		//String file = rootpath + "/WEB-INF/classes/qqstatus.properties";
 		SysConfig conf = new SysConfig();
